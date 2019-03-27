@@ -12,4 +12,14 @@ namespace Equinox.Domain.Core.Events
             Timestamp = DateTime.Now;
         }
     }
+
+    public abstract class Event<TResponse> : Request<TResponse>, INotification
+    {
+        public DateTime Timestamp { get; private set; }
+
+        protected Event()
+        {
+            Timestamp = DateTime.Now;
+        }
+    }
 }

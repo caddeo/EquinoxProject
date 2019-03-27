@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Equinox.Application.Interfaces;
 using Equinox.Application.ViewModels;
 using Equinox.Domain.Core.Bus;
@@ -33,9 +34,9 @@ namespace Equinox.Services.Api.Controllers
         [HttpGet]
         [AllowAnonymous]
         [Route("customer-management/{id:guid}")]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            var customerViewModel = _customerAppService.GetById(id);
+            var customerViewModel = await _customerAppService.GetById(id);
 
             return Response(customerViewModel);
         }     

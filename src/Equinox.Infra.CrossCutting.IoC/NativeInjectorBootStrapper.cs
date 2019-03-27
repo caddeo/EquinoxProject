@@ -8,6 +8,8 @@ using Equinox.Domain.Core.Notifications;
 using Equinox.Domain.EventHandlers;
 using Equinox.Domain.Events;
 using Equinox.Domain.Interfaces;
+using Equinox.Domain.Models;
+using Equinox.Domain.QueryHandlers;
 using Equinox.Infra.CrossCutting.Bus;
 using Equinox.Infra.CrossCutting.Identity.Authorization;
 using Equinox.Infra.CrossCutting.Identity.Models;
@@ -50,6 +52,9 @@ namespace Equinox.Infra.CrossCutting.IoC
             services.AddScoped<IRequestHandler<RegisterNewCustomerCommand, bool>, CustomerCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateCustomerCommand, bool>, CustomerCommandHandler>();
             services.AddScoped<IRequestHandler<RemoveCustomerCommand, bool>, CustomerCommandHandler>();
+            
+            // Domain - Queries
+            services.AddScoped<IRequestHandler<GetCustomerByIdQuery, Customer>, CustomerQueryHandler>();
 
             // Infra - Data
             services.AddScoped<ICustomerRepository, CustomerRepository>();

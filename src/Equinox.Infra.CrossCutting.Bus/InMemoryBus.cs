@@ -2,6 +2,7 @@
 using Equinox.Domain.Core.Bus;
 using Equinox.Domain.Core.Commands;
 using Equinox.Domain.Core.Events;
+using Equinox.Domain.Core.Queries;
 using MediatR;
 
 namespace Equinox.Infra.CrossCutting.Bus
@@ -20,6 +21,11 @@ namespace Equinox.Infra.CrossCutting.Bus
         public Task SendCommand<T>(T command) where T : Command
         {
             return _mediator.Send(command);
+        }
+
+        public Task<TResponse> GetQuery<TResponse, TQuery>(TQuery query) where TQuery : Query<TResponse>
+        {
+            return _mediator.Send(query);
         }
 
         public Task RaiseEvent<T>(T @event) where T : Event

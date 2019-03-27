@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Equinox.Application.EventSourcedNormalizers;
 using Equinox.Application.ViewModels;
 
@@ -9,7 +10,7 @@ namespace Equinox.Application.Interfaces
     {
         void Register(CustomerViewModel customerViewModel);
         IEnumerable<CustomerViewModel> GetAll();
-        CustomerViewModel GetById(Guid id);
+        Task<CustomerViewModel> GetById(Guid id);
         void Update(CustomerViewModel customerViewModel);
         void Remove(Guid id);
         IList<CustomerHistoryData> GetAllHistory(Guid id);

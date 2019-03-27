@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Equinox.Application.EventSourcedNormalizers;
@@ -8,6 +9,7 @@ using Equinox.Application.ViewModels;
 using Equinox.Domain.Commands;
 using Equinox.Domain.Core.Bus;
 using Equinox.Domain.Interfaces;
+using Equinox.Domain.Models;
 using Equinox.Infra.Data.Repository.EventSourcing;
 
 namespace Equinox.Application.Services
@@ -35,9 +37,11 @@ namespace Equinox.Application.Services
             return _customerRepository.GetAll().ProjectTo<CustomerViewModel>(_mapper.ConfigurationProvider);
         }
 
-        public CustomerViewModel GetById(Guid id)
+        public async Task<CustomerViewModel> GetById(Guid id)
         {
-            return _mapper.Map<CustomerViewModel>(_customerRepository.GetById(id));
+            var customerQuery = _mapper.Map<GetCustomerByIdQuery>(id);
+            var customer = await Bus.GetQuery<Customer, GetCustomerByIdQuery>(customerQuery);
+            return _mapper.Map<CustomerViewModel>(customer);
         }
 
         public void Register(CustomerViewModel customerViewModel)

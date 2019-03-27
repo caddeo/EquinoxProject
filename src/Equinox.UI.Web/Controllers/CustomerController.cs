@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Equinox.Application.Interfaces;
 using Equinox.Application.ViewModels;
 using Equinox.Domain.Core.Notifications;
@@ -73,14 +74,14 @@ namespace Equinox.UI.Web.Controllers
         [HttpGet]
         [Authorize(Policy = "CanWriteCustomerData")]
         [Route("customer-management/edit-customer/{id:guid}")]
-        public IActionResult Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var customerViewModel = _customerAppService.GetById(id.Value);
+            var customerViewModel = await _customerAppService.GetById(id.Value);
 
             if (customerViewModel == null)
             {

@@ -4,4 +4,9 @@
     {
         void Handle(T message);
     }
+
+    public interface IHandler<in TRequest, TResponse> where TRequest : Request<TResponse>
+    {
+        TResponse Handle(TRequest request);
+    }
 }
