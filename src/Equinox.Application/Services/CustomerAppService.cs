@@ -39,7 +39,7 @@ namespace Equinox.Application.Services
 
         public async Task<CustomerViewModel> GetById(Guid id)
         {
-            var customerQuery = _mapper.Map<GetCustomerByIdQuery>(id);
+            var customerQuery = new GetCustomerByIdQuery(id);
             var customer = await Bus.GetQuery<Customer, GetCustomerByIdQuery>(customerQuery);
             return _mapper.Map<CustomerViewModel>(customer);
         }
